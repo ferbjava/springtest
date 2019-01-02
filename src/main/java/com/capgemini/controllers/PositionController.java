@@ -35,7 +35,7 @@ public class PositionController {
 	
 	@GetMapping(value = "/position")
 	public List<PositionTO> showAllPositions() {
-		return positionService.findAllCPositions();
+		return positionService.findAllPositions();
 	}
 	
 	@PutMapping(value = "/position/edit", consumes = MediaType.APPLICATION_JSON_VALUE)

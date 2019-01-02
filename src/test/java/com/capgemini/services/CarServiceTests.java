@@ -88,7 +88,7 @@ public class CarServiceTests {
 	@Transactional
 	public void shouldFindAllCars() {
 		// given
-		final Long EPEXTED_CARS_NUMBER = 2L;
+		final Long EXPECTED_CARS_NUMBER = 2L;
 		CarTO givenCar01 = testData.getCarsList().get(0);
 		CarTO givenCar02 = testData.getCarsList().get(1);
 		
@@ -99,7 +99,7 @@ public class CarServiceTests {
 		List<CarTO> findedCars = carService.findAllCars();
 
 		// then
-		assertEquals(EPEXTED_CARS_NUMBER, new Long(findedCars.size()));
+		assertEquals(EXPECTED_CARS_NUMBER, new Long(findedCars.size()));
 		assertEquals(savedCar01.getId(), findedCars.get(0).getId());
 		assertEquals(savedCar02.getId(), findedCars.get(1).getId());
 

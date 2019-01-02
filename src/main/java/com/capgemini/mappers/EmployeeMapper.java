@@ -14,15 +14,14 @@ public class EmployeeMapper {
 			return null;
 		}
 		return new EmployeeTOBuilder().withId(entity.getId()).withFirstName(entity.getFirstName())
-				.withLastName(entity.getLastName()).withPosition(entity.getPosition()).build();
+				.withLastName(entity.getLastName()).withPositionId(entity.getPosition().getId()).build();
 	}
 
 	public static EmployeeEntity toEmployeeEntity(EmployeeTO employeeTO) {
 		if (employeeTO == null) {
 			return null;
 		}
-		return new EmployeeEntity(employeeTO.getId(), employeeTO.getFirstName(), employeeTO.getLastName(),
-				employeeTO.getPosition());
+		return new EmployeeEntity(employeeTO.getId(), employeeTO.getFirstName(), employeeTO.getLastName());
 	}
 	
 	public static List<EmployeeTO> map2TO(List<EmployeeEntity> entitiesList) {
@@ -37,6 +36,13 @@ public class EmployeeMapper {
 			return null;
 		}
 		return tosList.stream().map(EmployeeMapper::toEmployeeEntity).collect(Collectors.toList());
+	}
+	
+	public static List<Long> map2TOids(List<EmployeeEntity> entitiesList) {
+		if (entitiesList == null) {
+			return null;
+		}
+		return entitiesList.stream().map(EmployeeMapper::toEmployeeTO).map(EmployeeTO::getId).collect(Collectors.toList());
 	}
 
 }

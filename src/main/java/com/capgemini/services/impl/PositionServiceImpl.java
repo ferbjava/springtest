@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.capgemini.dao.EmployeeDao;
 import com.capgemini.dao.PositionDao;
 import com.capgemini.entities.PositionEntity;
 import com.capgemini.mappers.PositionMapper;
@@ -18,7 +19,10 @@ import com.capgemini.tos.PositionTO;
 public class PositionServiceImpl implements PositionService {
 
 	@Autowired
-	PositionDao positionDao;
+	private PositionDao positionDao;
+
+	@Autowired
+	private EmployeeDao employeeDao;
 
 	@Override
 	public Long findPositionNo() {
@@ -41,11 +45,14 @@ public class PositionServiceImpl implements PositionService {
 	@Transactional(readOnly = false)
 	public PositionTO updatePosition(PositionTO positionTO) {
 		PositionEntity entity = PositionMapper.toPositionEntity(positionTO);
+		for (Long i : positionTO.getEmployeesId()) {
+			entity.addEmployee(employeeDao.findById(i).get());
+		}
 		return PositionMapper.toPositionTO(positionDao.save(entity));
 	}
 
 	@Override
-	public List<PositionTO> findAllCPositions() {
+	public List<PositionTO> findAllPositions() {
 		return PositionMapper.map2TO(Lists.newArrayList(positionDao.findAll()));
 	}
 

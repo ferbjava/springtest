@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,23 +17,22 @@ public class EmployeeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false, length = 45)
 	private String firstName;
 	@Column(nullable = false, length = 45)
 	private String lastName;
-	@Column(nullable = false, length = 45)
-	private String position;
+	@ManyToOne
+	private PositionEntity position;
 
 	public EmployeeEntity() {
 	}
 
-	public EmployeeEntity(Long id, String firstName, String lastName, String position) {
+	public EmployeeEntity(Long id, String firstName, String lastName) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.position = position;
 	}
 
 	public Long getId() {
@@ -55,11 +55,11 @@ public class EmployeeEntity implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getPosition() {
+	public PositionEntity getPosition() {
 		return position;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(PositionEntity position) {
 		this.position = position;
 	}
 

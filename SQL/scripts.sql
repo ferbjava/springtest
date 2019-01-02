@@ -1,2 +1,2 @@
 CREATE SCHEMA IF NOT EXISTS `car_rental` DEFAULT CHARACTER SET utf8 ;
-USE `car_rental` ;
+USE `car_rental`;
