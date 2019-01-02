@@ -35,7 +35,10 @@ public class DataSource {
 
 	private void fillEmployeesList() {
 		employeeData.add(new EmployeeTOBuilder().withFirstName("Jan").withLastName("Kowalski").build());
-
+		employeeData.add(new EmployeeTOBuilder().withFirstName("Adam").withLastName("Nowak").build());
+		employeeData.add(new EmployeeTOBuilder().withFirstName("Piotr").withLastName("Wisniewski").build());
+		employeeData.add(new EmployeeTOBuilder().withFirstName("Andrzej").withLastName("Duda").build());
+		employeeData.add(new EmployeeTOBuilder().withFirstName("Zenon").withLastName("Martyniuk").build());
 	}
 
 }

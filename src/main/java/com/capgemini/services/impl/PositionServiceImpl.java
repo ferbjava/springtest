@@ -20,7 +20,7 @@ public class PositionServiceImpl implements PositionService {
 
 	@Autowired
 	private PositionDao positionDao;
-	
+
 	@Autowired
 	private EmployeeDao employeeDao;
 

@@ -34,6 +34,10 @@ public class EmployeeTO {
 	public Long getPositionId() {
 		return positionId;
 	}
+	
+	public void setPositionId(Long positionId) {
+		this.positionId = positionId;
+	}
 
 	public static class EmployeeTOBuilder {
 
@@ -63,11 +67,11 @@ public class EmployeeTO {
 		}
 
 		public EmployeeTO build() {
-			checkBeforeBuild(firstName, lastName, positionId);
+			checkBeforeBuild(firstName, lastName);
 			return new EmployeeTO(id, firstName, lastName, positionId);
 		}
 
-		private void checkBeforeBuild(String firstName, String lastName, Long position) {
+		private void checkBeforeBuild(String firstName, String lastName) {
 			boolean isFirstName = false;
 			if (firstName != null && !firstName.isEmpty()) {
 				isFirstName = true;
@@ -76,11 +80,7 @@ public class EmployeeTO {
 			if (lastName != null && !lastName.isEmpty()) {
 				isLastName = true;
 			}
-			boolean isPositionId = false;
-			if (position != null) {
-				isPositionId = true;
-			}
-			if (!isFirstName || !isLastName || !isPositionId) {
+			if (!isFirstName || !isLastName) {
 				throw new RuntimeException("Invalid 'EMPLOYEE' to be created");
 			}
 		}

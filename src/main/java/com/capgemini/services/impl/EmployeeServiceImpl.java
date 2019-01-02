@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = false)
 	public EmployeeTO updateEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
-		entity.setPosition(positionDao.findById(employeeTO.getId()).get());
+		entity.setPosition(positionDao.findById(employeeTO.getPositionId()).get());
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
 
