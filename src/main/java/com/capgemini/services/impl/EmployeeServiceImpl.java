@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.dao.EmployeeDao;
+import com.capgemini.dao.PositionDao;
 import com.capgemini.entities.EmployeeEntity;
 import com.capgemini.mappers.EmployeeMapper;
 import com.capgemini.services.EmployeeService;
@@ -19,6 +20,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeDao employeeDao;
+	
+	@Autowired
+	private PositionDao positionDao;
 
 	@Override
 	public Long findEmployeeNo() {
@@ -29,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = false)
 	public EmployeeTO saveEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
+		entity.setPosition(positionDao.findById(employeeTO.getPositionId()).get());
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
 
@@ -41,6 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = false)
 	public EmployeeTO updateEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
+		entity.setPosition(positionDao.findById(employeeTO.getId()).get());
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
 

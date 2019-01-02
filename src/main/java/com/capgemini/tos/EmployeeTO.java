@@ -5,18 +5,18 @@ public class EmployeeTO {
 	private Long id;
 	private String firstName;
 	private String lastName;
-	private String position;
+	private Long positionId;
 
 	public EmployeeTO() {
 		super();
 	}
 
-	public EmployeeTO(Long id, String firstName, String lastName, String position) {
+	public EmployeeTO(Long id, String firstName, String lastName, Long positionId) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.position = position;
+		this.positionId = positionId;
 	}
 
 	public Long getId() {
@@ -31,8 +31,8 @@ public class EmployeeTO {
 		return lastName;
 	}
 
-	public String getPosition() {
-		return position;
+	public Long getPositionId() {
+		return positionId;
 	}
 
 	public static class EmployeeTOBuilder {
@@ -40,7 +40,7 @@ public class EmployeeTO {
 		private Long id;
 		private String firstName;
 		private String lastName;
-		private String position;
+		private Long positionId;
 
 		public EmployeeTOBuilder withId(Long id) {
 			this.id = id;
@@ -57,17 +57,17 @@ public class EmployeeTO {
 			return this;
 		}
 
-		public EmployeeTOBuilder withPosition(String position) {
-			this.position = position;
+		public EmployeeTOBuilder withPositionId(Long positionId) {
+			this.positionId = positionId;
 			return this;
 		}
 
 		public EmployeeTO build() {
-			checkBeforeBuild(firstName, lastName, position);
-			return new EmployeeTO(id, firstName, lastName, position);
+			checkBeforeBuild(firstName, lastName, positionId);
+			return new EmployeeTO(id, firstName, lastName, positionId);
 		}
 
-		private void checkBeforeBuild(String firstName, String lastName, String position) {
+		private void checkBeforeBuild(String firstName, String lastName, Long position) {
 			boolean isFirstName = false;
 			if (firstName != null && !firstName.isEmpty()) {
 				isFirstName = true;
@@ -76,15 +76,14 @@ public class EmployeeTO {
 			if (lastName != null && !lastName.isEmpty()) {
 				isLastName = true;
 			}
-			boolean isPosition = false;
-			if (position != null && !position.isEmpty()) {
-				isPosition = true;
+			boolean isPositionId = false;
+			if (position != null) {
+				isPositionId = true;
 			}
-			if (!isFirstName || !isLastName || !isPosition) {
+			if (!isFirstName || !isLastName || !isPositionId) {
 				throw new RuntimeException("Invalid 'EMPLOYEE' to be created");
 			}
 		}
-
 	}
 
 }

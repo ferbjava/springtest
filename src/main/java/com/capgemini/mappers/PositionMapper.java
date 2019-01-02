@@ -13,7 +13,8 @@ public class PositionMapper {
 		if (entity == null) {
 			return null;
 		}
-		return new PositionTOBuilder().withId(entity.getId()).withPositionName(entity.getPositionName()).build();
+		return new PositionTOBuilder().withId(entity.getId()).withPositionName(entity.getPositionName())
+				.withEmployeesId(EmployeeMapper.map2TOids(entity.getEmployees())).build();
 	}
 
 	public static PositionEntity toPositionEntity(PositionTO positionTO) {
@@ -24,7 +25,7 @@ public class PositionMapper {
 	}
 
 	public static List<PositionTO> map2TO(List<PositionEntity> entitiesList) {
-		if(entitiesList == null) {
+		if (entitiesList == null) {
 			return null;
 		}
 		return entitiesList.stream().map(PositionMapper::toPositionTO).collect(Collectors.toList());
@@ -35,6 +36,14 @@ public class PositionMapper {
 			return null;
 		}
 		return tosList.stream().map(PositionMapper::toPositionEntity).collect(Collectors.toList());
+	}
+
+	public static List<Long> map2TOids(List<PositionEntity> entitiesList) {
+		if (entitiesList == null) {
+			return null;
+		}
+		return entitiesList.stream().map(PositionMapper::toPositionTO).map(PositionTO::getId)
+				.collect(Collectors.toList());
 	}
 
 }

@@ -34,7 +34,7 @@ public class DataSource {
 	}
 
 	private void fillEmployeesList() {
-		employeeData.add(new EmployeeTOBuilder().withFirstName("Jan").withLastName("Kowalski").withPosition("manager").build());
+		employeeData.add(new EmployeeTOBuilder().withFirstName("Jan").withLastName("Kowalski").build());
 
 	}
 

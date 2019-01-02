@@ -14,7 +14,7 @@ public interface PositionService {
 
 	PositionTO updatePosition(PositionTO positionTO);
 	
-	List<PositionTO>findAllCPositions();
+	List<PositionTO>findAllPositions();
 
 	void removePosition(Long id);
 
