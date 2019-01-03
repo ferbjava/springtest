@@ -150,8 +150,8 @@ public class CarTO {
 			if (mileage != null) {
 				isMileage = true;
 			}
-			if (!isBrand || !isType || !isProductionYear || !isProductionYear || !isColor || !isEngineCapacity
-					|| !isEnginePower || !isMileage) {
+			if (!isBrand || !isType || !isProductionYear || !isColor || !isEngineCapacity || !isEnginePower
+					|| !isMileage) {
 				throw new RuntimeException("Invalid 'CAR' to be created");
 			}
 		}
