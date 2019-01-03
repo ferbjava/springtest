@@ -186,4 +186,107 @@ public class EmployeeServiceTests {
 		assertEquals(EXPECTED_FINAL_EMPLOYEES_NUMBER, finalEmployeesNumber);
 	}
 
+	@Test
+	@Transactional
+	public void shouldNotAddSecondPosition() {
+		// given
+		final Long EXPECTED_POSITIONS_NUMBER = 1L;
+		PositionTO givenPosition01 = testData.getPositionsList().get(0);
+		PositionTO savedPosition01 = positionService.savePosition(givenPosition01);
+		Long initialPositionsNumber = positionService.findPositionNo();
+		
+		EmployeeTO employee01 = testData.getEmployeeList().get(0);
+		employee01.setPositionId(savedPosition01.getId());
+		EmployeeTO employee02 = testData.getEmployeeList().get(1);
+		employee02.setPositionId(savedPosition01.getId());
+
+		// when
+		employeeService.saveEmployee(employee01);
+		employeeService.saveEmployee(employee02);
+		Long finalPositionsNumber = positionService.findPositionNo();
+
+
+		// then
+		assertEquals(EXPECTED_POSITIONS_NUMBER, initialPositionsNumber);
+		assertEquals(initialPositionsNumber, finalPositionsNumber);
+	}
+
+	@Test
+	@Transactional
+	public void shouldRemoveOnlyEmployees() {
+		// given
+		final Long EXPECTED_INITIAL_POSITIONS_NUMBER = 2L;
+		final Long EXPECTED_FINAL_POSITIONS_NUMBER = 2L;
+		final Long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 3L;
+		final Long EXPECTED_FINAL_EMPLOYEES_NUMBER = 2L;
+		PositionTO givenPosition01 = testData.getPositionsList().get(0);
+		PositionTO savedPosition01 = positionService.savePosition(givenPosition01);
+		PositionTO givenPosition02 = testData.getPositionsList().get(1);
+		PositionTO savedPosition02 = positionService.savePosition(givenPosition02);
+		Long initialPositionsNumber = positionService.findPositionNo();
+		
+		EmployeeTO employee01 = testData.getEmployeeList().get(0);
+		employee01.setPositionId(savedPosition01.getId());
+		EmployeeTO employee02 = testData.getEmployeeList().get(1);
+		employee02.setPositionId(savedPosition02.getId());
+		EmployeeTO employee03 = testData.getEmployeeList().get(2);
+		employee03.setPositionId(savedPosition01.getId());
+
+		EmployeeTO savedEmployee01 = employeeService.saveEmployee(employee01);
+		employeeService.saveEmployee(employee02);
+		employeeService.saveEmployee(employee03);
+		Long initialEmployeesNumber = employeeService.findEmployeeNo();
+		
+		// when
+		employeeService.removeEmployee(savedEmployee01.getId());
+		Long finalPositionsNumber = positionService.findPositionNo();
+		Long finalEmployeesNumber = employeeService.findEmployeeNo();
+
+
+		// then
+		assertEquals(EXPECTED_INITIAL_POSITIONS_NUMBER, initialPositionsNumber);
+		assertEquals(EXPECTED_FINAL_POSITIONS_NUMBER, finalPositionsNumber);
+		assertEquals(EXPECTED_INITIAL_EMPLOYEES_NUMBER, initialEmployeesNumber);
+		assertEquals(EXPECTED_FINAL_EMPLOYEES_NUMBER, finalEmployeesNumber);
+	}
+
+	@Test
+	@Transactional
+	public void shouldRemovePositionAndFollowingEmployees() {
+		// given
+		final Long EXPECTED_INITIAL_POSITIONS_NUMBER = 2L;
+		final Long EXPECTED_FINAL_POSITIONS_NUMBER = 1L;
+		final Long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 3L;
+		final Long EXPECTED_FINAL_EMPLOYEES_NUMBER = 1L;
+		PositionTO givenPosition01 = testData.getPositionsList().get(0);
+		PositionTO savedPosition01 = positionService.savePosition(givenPosition01);
+		PositionTO givenPosition02 = testData.getPositionsList().get(1);
+		PositionTO savedPosition02 = positionService.savePosition(givenPosition02);
+		Long initialPositionsNumber = positionService.findPositionNo();
+		
+		EmployeeTO employee01 = testData.getEmployeeList().get(0);
+		employee01.setPositionId(savedPosition01.getId());
+		EmployeeTO employee02 = testData.getEmployeeList().get(1);
+		employee02.setPositionId(savedPosition02.getId());
+		EmployeeTO employee03 = testData.getEmployeeList().get(2);
+		employee03.setPositionId(savedPosition01.getId());
+
+		employeeService.saveEmployee(employee01);
+		employeeService.saveEmployee(employee02);
+		employeeService.saveEmployee(employee03);
+		Long initialEmployeesNumber = employeeService.findEmployeeNo();
+		
+		// when
+		positionService.removePosition(savedPosition01.getId());
+		Long finalPositionsNumber = positionService.findPositionNo();
+		Long finalEmployeesNumber = employeeService.findEmployeeNo();
+
+
+		// then
+		assertEquals(EXPECTED_INITIAL_POSITIONS_NUMBER, initialPositionsNumber);
+		assertEquals(EXPECTED_FINAL_POSITIONS_NUMBER, finalPositionsNumber);
+		assertEquals(EXPECTED_INITIAL_EMPLOYEES_NUMBER, initialEmployeesNumber);
+		assertEquals(EXPECTED_FINAL_EMPLOYEES_NUMBER, finalEmployeesNumber);
+	}
+
 }

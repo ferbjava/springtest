@@ -2,8 +2,10 @@ package com.capgemini.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,7 @@ public class EmployeeEntity implements Serializable {
 	private String firstName;
 	@Column(nullable = false, length = 45)
 	private String lastName;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private PositionEntity position;
 
 	public EmployeeEntity() {

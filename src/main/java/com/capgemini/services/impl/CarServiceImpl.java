@@ -1,8 +1,8 @@
 package com.capgemini.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +41,9 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public List<CarTO> findAllCars() {
-		return CarMapper.map2TOs(Lists.newArrayList(carDao.findAll()));
+		List<CarEntity> carsList = new ArrayList<>();
+		carDao.findAll().forEach(carsList::add);
+		return CarMapper.map2TOs(carsList);
 	}
 
 	@Override

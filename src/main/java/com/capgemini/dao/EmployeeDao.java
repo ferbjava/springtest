@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.capgemini.entities.EmployeeEntity;
 
 @Repository
-public interface EmployeeDao extends CrudRepository<EmployeeEntity, Long> {
+public interface EmployeeDao extends CrudRepository<EmployeeEntity, Long>, CustomEmployeeDao {
 
 }

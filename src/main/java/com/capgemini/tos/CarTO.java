@@ -157,4 +157,11 @@ public class CarTO {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "CarTO [id=" + id + ", brand=" + brand + ", type=" + type + ", productionYear=" + productionYear
+				+ ", color=" + color + ", engineCapacity=" + engineCapacity + ", enginePower=" + enginePower
+				+ ", mileage=" + mileage + "]";
+	}
+
 }

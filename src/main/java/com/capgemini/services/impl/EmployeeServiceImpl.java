@@ -1,8 +1,8 @@
 package com.capgemini.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeDao employeeDao;
-	
+
 	@Autowired
 	private PositionDao positionDao;
 
@@ -52,13 +52,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<EmployeeTO> findAllEmployees() {
-		return EmployeeMapper.map2TO(Lists.newArrayList(employeeDao.findAll()));
+		List<EmployeeEntity> employeesList = new ArrayList<>();
+		employeeDao.findAll().forEach(employeesList::add);
+		return EmployeeMapper.map2TO(employeesList);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public void removeEmployee(Long id) {
 		employeeDao.deleteById(id);
+	}
+
+	@Override
+	public List<EmployeeTO> findEmployeesByPositionId(Long positionId) {
+		return EmployeeMapper.map2TO(employeeDao.findEmployeesByPositionId(positionId));
 	}
 
 }

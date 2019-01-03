@@ -1,14 +1,15 @@
 package com.capgemini.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.dao.PositionDao;
+import com.capgemini.entities.EmployeeEntity;
 import com.capgemini.entities.PositionEntity;
 import com.capgemini.mappers.PositionMapper;
 import com.capgemini.services.PositionService;
@@ -53,12 +54,18 @@ public class PositionServiceImpl implements PositionService {
 
 	@Override
 	public List<PositionTO> findAllPositions() {
-		return PositionMapper.map2TO(Lists.newArrayList(positionDao.findAll()));
+		List<PositionEntity> positionsList = new ArrayList<>();
+		positionDao.findAll().forEach(positionsList::add);
+		return PositionMapper.map2TO(positionsList);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public void removePosition(Long id) {
+		List<EmployeeEntity> employees = employeeDao.findEmployeesByPositionId(id);
+		for(EmployeeEntity e : employees) {
+			employeeDao.deleteById(e.getId());
+		}
 		positionDao.deleteById(id);
 	}
 

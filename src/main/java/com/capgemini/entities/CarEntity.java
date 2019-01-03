@@ -107,6 +107,5 @@ public class CarEntity implements Serializable {
 	public void setMileage(Integer mileage) {
 		this.mileage = mileage;
 	}
-	
 
 }
