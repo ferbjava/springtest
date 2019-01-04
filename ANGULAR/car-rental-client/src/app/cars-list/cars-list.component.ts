@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CarsService } from '../services/cars.service';
 import { Car } from '../models/car.model';
 import { Subject } from 'rxjs';
+import { GiphyService } from '../services/giphy.service';
 
 @Component({
   selector: 'app-cars-list',
@@ -12,8 +13,10 @@ export class CarsListComponent implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject();
   cars: Car[];
+
   constructor(
-    private service: CarsService,
+    private carsService: CarsService,
+    private giphyService: GiphyService,
   ) { }
 
   ngOnInit() {
@@ -21,8 +24,11 @@ export class CarsListComponent implements OnInit, OnDestroy {
   }
 
   loadCars() {
-    this.service.getAllCars().subscribe( data => {
+    this.carsService.getAllCars().subscribe( data => {
       this.cars = data;
+      for (const car of this.cars) {
+        this.giphyService.get(car.brand).subscribe(url => car.giphyUrl = url);
+      }
     });
   }
 

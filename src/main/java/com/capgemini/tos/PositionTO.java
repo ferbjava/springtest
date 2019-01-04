@@ -69,4 +69,9 @@ public class PositionTO {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "PositionTO [id=" + id + ", positionName=" + positionName + "]";
+	}
+
 }

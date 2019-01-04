@@ -7,4 +7,5 @@ export class Car {
   engineCapacity: number;
   enginePower: number;
   mileage: number;
+  giphyUrl: any;
 }

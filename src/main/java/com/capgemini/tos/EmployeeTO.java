@@ -86,4 +86,10 @@ public class EmployeeTO {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "EmployeeTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", positionId="
+				+ positionId + "]";
+	}
+
 }
