@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.capgemini.dao.DepartmentDao;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.dao.PositionDao;
 import com.capgemini.entities.EmployeeEntity;
@@ -23,6 +24,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private PositionDao positionDao;
+	
+	@Autowired
+	private DepartmentDao depDao;
 
 	@Override
 	public Long findEmployeeNo() {
@@ -34,6 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeTO saveEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
 		entity.setPosition(positionDao.findById(employeeTO.getPositionId()).get());
+		entity.setDepartment(depDao.findById(employeeTO.getDepartmentId()).get());
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
 
@@ -47,6 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeTO updateEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
 		entity.setPosition(positionDao.findById(employeeTO.getPositionId()).get());
+		entity.setDepartment(depDao.findById(employeeTO.getDepartmentId()).get());
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
 

@@ -91,7 +91,7 @@ public class CarServiceTests {
 		final Long EXPECTED_CARS_NUMBER = 2L;
 		CarTO givenCar01 = testData.getCarsList().get(0);
 		CarTO givenCar02 = testData.getCarsList().get(1);
-		
+
 		CarTO savedCar01 = carService.saveCar(givenCar01);
 		CarTO savedCar02 = carService.saveCar(givenCar02);
 

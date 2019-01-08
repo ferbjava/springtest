@@ -17,7 +17,7 @@ public class PositionTO {
 		super();
 		this.id = id;
 		this.positionName = positionName;
-		this.employeesId = employeesId;
+		this.employeesId.addAll(employeesId);
 	}
 
 	public Long getId() {
@@ -36,7 +36,7 @@ public class PositionTO {
 
 		private Long id;
 		private String positionName;
-		private List<Long> employeesId;
+		private List<Long> employeesId = new ArrayList<>();
 
 		public PositionTOBuilder() {
 			super();
@@ -53,7 +53,7 @@ public class PositionTO {
 		}
 
 		public PositionTOBuilder withEmployeesId(List<Long> employeesId) {
-			this.employeesId = employeesId;
+			this.employeesId.addAll(employeesId);
 			return this;
 		}
 

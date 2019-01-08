@@ -11,11 +11,14 @@ import { MatInputModule} from '@angular/material';
 import { MatListModule} from '@angular/material';
 import { MatToolbarModule} from '@angular/material';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CarEditComponent } from './car-edit/car-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CarsListComponent
+    CarsListComponent,
+    CarEditComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatCardModule,
     MatInputModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

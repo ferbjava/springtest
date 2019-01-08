@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,46 +14,57 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "POSITION")
-public class PositionEntity implements Serializable {
+@Table(name = "DEPARTMENT")
+public class DepartmentEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false, length = 45)
-	private String positionName;
-	@OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@Column(nullable = false, length = 100)
+	private String depAdrees;
+	@Column(nullable = false)
+	private Integer depTelephone;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department", orphanRemoval = true)
 	private List<EmployeeEntity> employees = new ArrayList<>();
 
-	public PositionEntity() {
+	public DepartmentEntity() {
 	}
 
-	public PositionEntity(Long id, String positionName) {
+	public DepartmentEntity(Long id, String depAdrees, Integer depTelephone) {
 		this.id = id;
-		this.positionName = positionName;
+		this.depAdrees = depAdrees;
+		this.depTelephone = depTelephone;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getPositionName() {
-		return positionName;
+	public String getDepAdrees() {
+		return depAdrees;
 	}
 
-	public void setPositionName(String positionName) {
-		this.positionName = positionName;
+	public void setDepAdrees(String depAdrees) {
+		this.depAdrees = depAdrees;
 	}
-	
+
+	public Integer getDepTelephone() {
+		return depTelephone;
+	}
+
+	public void setDepTelephone(Integer depTelephone) {
+		this.depTelephone = depTelephone;
+	}
+
 	public List<EmployeeEntity> getEmployees() {
 		return employees;
 	}
-	
+
 	public void setEmployees(List<EmployeeEntity> employees) {
 		this.employees.clear();
-		this.employees.addAll(employees);
+		this.employees = employees;
 	}
 	
 	public void addEmployee(EmployeeEntity employee) {

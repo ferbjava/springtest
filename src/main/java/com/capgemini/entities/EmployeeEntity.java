@@ -1,6 +1,7 @@
 package com.capgemini.entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,16 +26,21 @@ public class EmployeeEntity implements Serializable {
 	private String firstName;
 	@Column(nullable = false, length = 45)
 	private String lastName;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@Column(nullable = false)
+	private Calendar dateBirth;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private PositionEntity position;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private DepartmentEntity department;
 
 	public EmployeeEntity() {
 	}
 
-	public EmployeeEntity(Long id, String firstName, String lastName) {
+	public EmployeeEntity(Long id, String firstName, String lastName, Calendar dateBirth) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.dateBirth = dateBirth;
 	}
 
 	public Long getId() {
@@ -57,12 +63,28 @@ public class EmployeeEntity implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public Calendar getDateBirth() {
+		return dateBirth;
+	}
+
+	public void setDateBirth(Calendar dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+
 	public PositionEntity getPosition() {
 		return position;
 	}
 
 	public void setPosition(PositionEntity position) {
 		this.position = position;
+	}
+
+	public DepartmentEntity getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(DepartmentEntity department) {
+		this.department = department;
 	}
 
 }

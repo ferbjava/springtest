@@ -46,9 +46,9 @@ public class PositionServiceImpl implements PositionService {
 	@Transactional(readOnly = false)
 	public PositionTO updatePosition(PositionTO positionTO) {
 		PositionEntity entity = PositionMapper.toPositionEntity(positionTO);
-		for (Long i : positionTO.getEmployeesId()) {
-			entity.addEmployee(employeeDao.findById(i).get());
-		}
+		positionTO.getEmployeesId().forEach(empId -> {
+			entity.addEmployee(employeeDao.findById(empId).get());
+		});
 		return PositionMapper.toPositionTO(positionDao.save(entity));
 	}
 

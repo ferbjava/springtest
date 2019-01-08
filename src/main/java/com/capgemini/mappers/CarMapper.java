@@ -27,14 +27,14 @@ public class CarMapper {
 				carTO.getColor(), carTO.getEngineCapacity(), carTO.getEnginePower(), carTO.getMileage());
 	}
 
-	public static List<CarTO> map2TOs(List<CarEntity> entitiesList) {
+	public static List<CarTO> map2TO(List<CarEntity> entitiesList) {
 		if(entitiesList == null) {
 			return null;
 		}
 		return entitiesList.stream().map(CarMapper::toCarTO).collect(Collectors.toList());
 	}
 
-	public static List<CarEntity> map2entities(List<CarTO> carTOs) {
+	public static List<CarEntity> map2Entities(List<CarTO> carTOs) {
 		if (carTOs == null) {
 			return null;
 		}

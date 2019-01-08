@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class CarsService {
 
-  private carsUrl = '//localhost:8080/car';
+  private mainUrl = '//localhost:8080';
+  private carsUrl = this.mainUrl + '/car';
 
   constructor(
     private readonly http: HttpClient,
@@ -16,5 +17,23 @@ export class CarsService {
 
     getAllCars(): Observable<Car[]> {
       return this.http.get<Car[]>(`${this.carsUrl}`);
+    }
+
+    getSingleCar(id: string) {
+      return this.http.get(`${this.carsUrl}/${id}`);
+    }
+
+    save(car: any): Observable<any> {
+      let result: Observable<Object>;
+      if (car.id) {
+        result = this.http.put(`${this.carsUrl}`, car);
+      } else {
+        result = this.http.post(`${this.carsUrl}`, car);
+      }
+      return result;
+    }
+
+    remove(id: string) {
+      return this.http.delete(`${this.carsUrl}/${id}`);
     }
 }

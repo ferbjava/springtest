@@ -25,11 +25,13 @@ public class CarController {
 	private CarService carService;
 	
 	@PostMapping(value = "/car", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = "http://localhost:4200")
 	public CarTO addNewCar(@RequestBody CarTO carTO){
 		return carService.saveCar(carTO);
 	}
 	
 	@GetMapping(value = "/car/{id}")
+	@CrossOrigin(origins = "http://localhost:4200")
 	public CarTO showCarDetails(@PathVariable("id") int id) {
 		return carService.findCar(new Long(id));
 	}
@@ -40,12 +42,14 @@ public class CarController {
 		return carService.findAllCars();
 	}
 	
-	@PutMapping(value = "/car/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/car", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = "http://localhost:4200")
 	public CarTO updateCarDetails(@RequestBody CarTO carTO) {
 		return carService.updateCar(carTO);
 	}
 	
 	@DeleteMapping(value = "/car/{id}")
+	@CrossOrigin(origins = "http://localhost:4200")
 	public void removeCar(@PathVariable("id") int id) {
 		carService.removeCar(new Long(id));
 	}

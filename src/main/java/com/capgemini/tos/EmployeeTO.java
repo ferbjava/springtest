@@ -1,22 +1,30 @@
 package com.capgemini.tos;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class EmployeeTO {
 
 	private Long id;
 	private String firstName;
 	private String lastName;
+	private Calendar dateBirth;
 	private Long positionId;
+	private Long departmentId;
 
 	public EmployeeTO() {
 		super();
 	}
 
-	public EmployeeTO(Long id, String firstName, String lastName, Long positionId) {
+	public EmployeeTO(Long id, String firstName, String lastName, Calendar dateBirth, Long positionId,
+			Long departmentId) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.dateBirth = dateBirth;
 		this.positionId = positionId;
+		this.departmentId = departmentId;
 	}
 
 	public Long getId() {
@@ -31,12 +39,24 @@ public class EmployeeTO {
 		return lastName;
 	}
 
+	public Calendar getDateBirth() {
+		return dateBirth;
+	}
+
 	public Long getPositionId() {
 		return positionId;
 	}
-	
+
 	public void setPositionId(Long positionId) {
 		this.positionId = positionId;
+	}
+
+	public Long getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	public static class EmployeeTOBuilder {
@@ -44,7 +64,9 @@ public class EmployeeTO {
 		private Long id;
 		private String firstName;
 		private String lastName;
+		private Calendar dateBirth;
 		private Long positionId;
+		private Long departmentId;
 
 		public EmployeeTOBuilder withId(Long id) {
 			this.id = id;
@@ -61,17 +83,27 @@ public class EmployeeTO {
 			return this;
 		}
 
+		public EmployeeTOBuilder withDateBirth(Calendar dateBirth) {
+			this.dateBirth = dateBirth;
+			return this;
+		}
+
 		public EmployeeTOBuilder withPositionId(Long positionId) {
 			this.positionId = positionId;
 			return this;
 		}
 
-		public EmployeeTO build() {
-			checkBeforeBuild(firstName, lastName);
-			return new EmployeeTO(id, firstName, lastName, positionId);
+		public EmployeeTOBuilder withDepartmentId(Long depId) {
+			this.departmentId = depId;
+			return this;
 		}
 
-		private void checkBeforeBuild(String firstName, String lastName) {
+		public EmployeeTO build() {
+			checkBeforeBuild(firstName, lastName, dateBirth);
+			return new EmployeeTO(id, firstName, lastName, dateBirth, positionId, departmentId);
+		}
+
+		private void checkBeforeBuild(String firstName, String lastName, Calendar dateBirth) {
 			boolean isFirstName = false;
 			if (firstName != null && !firstName.isEmpty()) {
 				isFirstName = true;
@@ -80,7 +112,11 @@ public class EmployeeTO {
 			if (lastName != null && !lastName.isEmpty()) {
 				isLastName = true;
 			}
-			if (!isFirstName || !isLastName) {
+			boolean isDateBirth = false;
+			if (dateBirth != null) {
+				isDateBirth = true;
+			}
+			if (!isFirstName || !isLastName || !isDateBirth) {
 				throw new RuntimeException("Invalid 'EMPLOYEE' to be created");
 			}
 		}
@@ -88,8 +124,10 @@ public class EmployeeTO {
 
 	@Override
 	public String toString() {
-		return "EmployeeTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", positionId="
-				+ positionId + "]";
+		Locale locale = Locale.getDefault();
+		return "EmployeeTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
+				+ dateBirth.get(5) + " " + dateBirth.getDisplayName(Calendar.MONTH, Calendar.LONG, locale) + " "
+				+ dateBirth.get(1) + ", positionId=" + positionId + ", departmentId=" + departmentId + "]";
 	}
 
 }

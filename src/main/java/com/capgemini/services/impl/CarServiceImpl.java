@@ -43,7 +43,7 @@ public class CarServiceImpl implements CarService {
 	public List<CarTO> findAllCars() {
 		List<CarEntity> carsList = new ArrayList<>();
 		carDao.findAll().forEach(carsList::add);
-		return CarMapper.map2TOs(carsList);
+		return CarMapper.map2TO(carsList);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CarsService } from '../services/cars.service';
 import { Car } from '../models/car.model';
 import { Subject } from 'rxjs';
+import {takeUntil } from 'rxjs/operators';
 import { GiphyService } from '../services/giphy.service';
 
 @Component({
@@ -24,10 +25,14 @@ export class CarsListComponent implements OnInit, OnDestroy {
   }
 
   loadCars() {
-    this.carsService.getAllCars().subscribe( data => {
+    this.carsService.getAllCars()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe( data => {
       this.cars = data;
       for (const car of this.cars) {
-        this.giphyService.get(car.brand).subscribe(url => car.giphyUrl = url);
+        this.giphyService.get(car.brand)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(url => car.giphyUrl = url);
       }
     });
   }

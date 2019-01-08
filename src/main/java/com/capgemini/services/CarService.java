@@ -9,9 +9,7 @@ public interface CarService {
 	Long findCarNo();
 
 	CarTO saveCar(CarTO carTO);
-
 	CarTO findCar(Long id);
-
 	CarTO updateCar(CarTO carTO);
 	
 	List<CarTO>findAllCars();

@@ -4,9 +4,12 @@
     <mat-list>
       <mat-list-item *ngFor="let car of cars">
         <img mat-list-avatar src="{{car.giphyUrl}}" alt="{{car.brand}}">
-        <h2 mat-line>{{car.brand}}</h2>
-        <h3 mat-line>{{car.color}}</h3>
+        <h3 mat-line>
+          <a mat-button [routerLink]="['/car-edit', car.id]">{{car.brand}}, {{car.type}}</a>
+        </h3>
       </mat-list-item>
     </mat-list>
   </mat-card-content>
+
+  <button mat-fab color = "primary" [routerLink]="['/car-add']">Add new car</button>
 </mat-card>

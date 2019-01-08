@@ -9,11 +9,8 @@ public interface PositionService {
 	Long findPositionNo();
 
 	PositionTO savePosition(PositionTO positionTO);
-
 	PositionTO findPosition(Long id);
-
 	PositionTO updatePosition(PositionTO positionTO);
-	
 	List<PositionTO>findAllPositions();
 
 	void removePosition(Long id);
