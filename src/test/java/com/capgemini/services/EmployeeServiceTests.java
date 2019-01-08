@@ -12,10 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.capgemini.tos.DepartmentTO;
 import com.capgemini.tos.EmployeeTO;
 import com.capgemini.tos.EmployeeTO.EmployeeTOBuilder;
 import com.capgemini.tos.PositionTO;
-import com.capgemini.tos.PositionTO.PositionTOBuilder;
 import com.capgemini.util.DataSource;
 
 @RunWith(SpringRunner.class)
@@ -30,6 +30,9 @@ public class EmployeeServiceTests {
 	@Autowired
 	private PositionService positionService;
 
+	@Autowired
+	private DepartmentService depService;
+
 	@Before
 	public void initialize() {
 		testData = new DataSource();
@@ -39,10 +42,14 @@ public class EmployeeServiceTests {
 	@Transactional
 	public void shouldAddEmployee() {
 		// given
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
 		PositionTO savedPosition01 = positionService.savePosition(position01);
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
+
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 
 		// when
 		EmployeeTO savedEmployee = employeeService.saveEmployee(employee01);
@@ -59,13 +66,17 @@ public class EmployeeServiceTests {
 		final Long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0L;
 		final Long EXPECTED_FINAL_EMPLOYEES_NUMBER = 2L;
 
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
 		PositionTO savedPosition01 = positionService.savePosition(position01);
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
 
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition01.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 
 		// when
 		Long initialEmployeesNumber = employeeService.findEmployeeNo();
@@ -82,13 +93,17 @@ public class EmployeeServiceTests {
 	@Transactional
 	public void shouldFindEmployeeById() {
 		// given
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
 		PositionTO savedPosition01 = positionService.savePosition(position01);
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
 
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition01.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 
 		EmployeeTO savedEmployee01 = employeeService.saveEmployee(employee01);
 		employeeService.saveEmployee(employee02);
@@ -106,13 +121,17 @@ public class EmployeeServiceTests {
 	public void shouldFindAllEmployees() {
 		// given
 		final int EXPECTED_EMPLOYEES_NUMBER = 2;
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
 		PositionTO savedPosition01 = positionService.savePosition(position01);
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
 
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition01.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 
 		EmployeeTO savedEmployee01 = employeeService.saveEmployee(employee01);
 		EmployeeTO savedEmployee02 = employeeService.saveEmployee(employee02);
@@ -133,13 +152,18 @@ public class EmployeeServiceTests {
 		final Long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0L;
 		final Long EXPECTED_FINAL_EMPLOYEES_NUMBER = 2L;
 		final String EXPECTED_NEW_FIRST_NAME = "Bozydar";
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
+
+		PositionTO position01 = testData.getPositionsList().get(0);
 		PositionTO savedPosition01 = positionService.savePosition(position01);
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
 
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition01.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 
 		Long initialEmployeesNumber = employeeService.findEmployeeNo();
 		EmployeeTO savedEmployee01 = employeeService.saveEmployee(employee01);
@@ -148,7 +172,8 @@ public class EmployeeServiceTests {
 		// when
 		EmployeeTO updatedEmployee01 = new EmployeeTOBuilder().withId(savedEmployee01.getId())
 				.withFirstName(EXPECTED_NEW_FIRST_NAME).withLastName(savedEmployee01.getLastName())
-				.withPositionId(savedEmployee01.getPositionId()).build();
+				.withDateBirth(savedEmployee01.getDateBirth()).withPositionId(savedEmployee01.getPositionId())
+				.withDepartmentId(savedEmployee01.getDepartmentId()).build();
 		EmployeeTO updatedAndSavedEMployee01 = employeeService.updateEmployee(updatedEmployee01);
 		Long finalEmployeesNumber = employeeService.findEmployeeNo();
 
@@ -165,13 +190,17 @@ public class EmployeeServiceTests {
 		// given
 		final Long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 2L;
 		final Long EXPECTED_FINAL_EMPLOYEES_NUMBER = 1L;
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
 		PositionTO savedPosition01 = positionService.savePosition(position01);
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
 
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition01.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 
 		EmployeeTO savedEmployee01 = employeeService.saveEmployee(employee01);
 		employeeService.saveEmployee(employee02);
@@ -194,17 +223,20 @@ public class EmployeeServiceTests {
 		PositionTO givenPosition01 = testData.getPositionsList().get(0);
 		PositionTO savedPosition01 = positionService.savePosition(givenPosition01);
 		Long initialPositionsNumber = positionService.findPositionNo();
-		
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
+
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition01.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 
 		// when
 		employeeService.saveEmployee(employee01);
 		employeeService.saveEmployee(employee02);
 		Long finalPositionsNumber = positionService.findPositionNo();
-
 
 		// then
 		assertEquals(EXPECTED_POSITIONS_NUMBER, initialPositionsNumber);
@@ -224,24 +256,28 @@ public class EmployeeServiceTests {
 		PositionTO givenPosition02 = testData.getPositionsList().get(1);
 		PositionTO savedPosition02 = positionService.savePosition(givenPosition02);
 		Long initialPositionsNumber = positionService.findPositionNo();
-		
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
+
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition02.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee03 = testData.getEmployeeList().get(2);
 		employee03.setPositionId(savedPosition01.getId());
+		employee03.setDepartmentId(savedDep01.getId());
 
 		EmployeeTO savedEmployee01 = employeeService.saveEmployee(employee01);
 		employeeService.saveEmployee(employee02);
 		employeeService.saveEmployee(employee03);
 		Long initialEmployeesNumber = employeeService.findEmployeeNo();
-		
+
 		// when
 		employeeService.removeEmployee(savedEmployee01.getId());
 		Long finalPositionsNumber = positionService.findPositionNo();
 		Long finalEmployeesNumber = employeeService.findEmployeeNo();
-
 
 		// then
 		assertEquals(EXPECTED_INITIAL_POSITIONS_NUMBER, initialPositionsNumber);
@@ -263,24 +299,28 @@ public class EmployeeServiceTests {
 		PositionTO givenPosition02 = testData.getPositionsList().get(1);
 		PositionTO savedPosition02 = positionService.savePosition(givenPosition02);
 		Long initialPositionsNumber = positionService.findPositionNo();
-		
+		DepartmentTO dep01 = testData.getDepartmentsList().get(0);
+		DepartmentTO savedDep01 = depService.saveDepartment(dep01);
+
 		EmployeeTO employee01 = testData.getEmployeeList().get(0);
 		employee01.setPositionId(savedPosition01.getId());
+		employee01.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee02 = testData.getEmployeeList().get(1);
 		employee02.setPositionId(savedPosition02.getId());
+		employee02.setDepartmentId(savedDep01.getId());
 		EmployeeTO employee03 = testData.getEmployeeList().get(2);
 		employee03.setPositionId(savedPosition01.getId());
+		employee03.setDepartmentId(savedDep01.getId());
 
 		employeeService.saveEmployee(employee01);
 		employeeService.saveEmployee(employee02);
 		employeeService.saveEmployee(employee03);
 		Long initialEmployeesNumber = employeeService.findEmployeeNo();
-		
+
 		// when
 		positionService.removePosition(savedPosition01.getId());
 		Long finalPositionsNumber = positionService.findPositionNo();
 		Long finalEmployeesNumber = employeeService.findEmployeeNo();
-
 
 		// then
 		assertEquals(EXPECTED_INITIAL_POSITIONS_NUMBER, initialPositionsNumber);

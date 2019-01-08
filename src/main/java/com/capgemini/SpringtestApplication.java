@@ -6,6 +6,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import com.capgemini.services.CarService;
 import com.capgemini.services.DepartmentService;
@@ -28,8 +29,11 @@ public class SpringtestApplication {
 		SpringApplication.run(SpringtestApplication.class, args);
 	}
 
-	@Bean()
-	ApplicationRunner init(CarService carService, PositionService positionService, DepartmentService depService, EmployeeService empService) {
+	@Bean
+	@Profile("mysql")
+	ApplicationRunner init(CarService carService, PositionService positionService, DepartmentService depService,
+			EmployeeService empService) {
+
 		final DataSource dataSource = new DataSource();
 		final List<CarTO> carsList = dataSource.getCarsList();
 		final List<DepartmentTO> departmentsList = dataSource.getDepartmentsList();
@@ -45,7 +49,7 @@ public class SpringtestApplication {
 
 			departmentsList.stream().forEach(depTO -> depService.saveDepartment(depTO));
 			depService.findAllDepartmetns().forEach(System.out::println);
-			
+
 			employeeList.get(0).setPositionId(positionService.findPosition(1L).getId());
 			employeeList.get(1).setPositionId(positionService.findPosition(3L).getId());
 			employeeList.get(2).setPositionId(positionService.findPosition(2L).getId());
@@ -58,7 +62,7 @@ public class SpringtestApplication {
 			employeeList.get(9).setPositionId(positionService.findPosition(3L).getId());
 			employeeList.get(10).setPositionId(positionService.findPosition(2L).getId());
 			employeeList.get(11).setPositionId(positionService.findPosition(2L).getId());
-			
+
 			employeeList.get(0).setDepartmentId(depService.findDepartment(1L).getId());
 			employeeList.get(1).setDepartmentId(depService.findDepartment(1L).getId());
 			employeeList.get(2).setDepartmentId(depService.findDepartment(1L).getId());
@@ -71,7 +75,7 @@ public class SpringtestApplication {
 			employeeList.get(9).setDepartmentId(depService.findDepartment(3L).getId());
 			employeeList.get(10).setDepartmentId(depService.findDepartment(3L).getId());
 			employeeList.get(11).setDepartmentId(depService.findDepartment(3L).getId());
-			
+
 			employeeList.stream().forEach(employeeTO -> empService.saveEmployee(employeeTO));
 			empService.findAllEmployees().forEach(System.out::println);
 		};
