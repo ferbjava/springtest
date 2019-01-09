@@ -53,6 +53,7 @@ public class PositionTO {
 		}
 
 		public PositionTOBuilder withEmployeesId(List<Long> employeesId) {
+			this.employeesId.clear();
 			this.employeesId.addAll(employeesId);
 			return this;
 		}

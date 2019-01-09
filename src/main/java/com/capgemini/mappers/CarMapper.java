@@ -28,7 +28,7 @@ public class CarMapper {
 	}
 
 	public static List<CarTO> map2TO(List<CarEntity> entitiesList) {
-		if(entitiesList == null) {
+		if (entitiesList == null) {
 			return null;
 		}
 		return entitiesList.stream().map(CarMapper::toCarTO).collect(Collectors.toList());
@@ -39,6 +39,13 @@ public class CarMapper {
 			return null;
 		}
 		return carTOs.stream().map(CarMapper::toCarEntity).collect(Collectors.toList());
+	}
+
+	public static List<Long> mat2TOids(List<CarEntity> entitiesList) {
+		if (entitiesList == null) {
+			return null;
+		}
+		return entitiesList.stream().map(CarEntity::getId).collect(Collectors.toList());
 	}
 
 }

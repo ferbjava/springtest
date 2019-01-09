@@ -15,7 +15,8 @@ public class EmployeeMapper {
 		}
 		return new EmployeeTOBuilder().withId(entity.getId()).withFirstName(entity.getFirstName())
 				.withLastName(entity.getLastName()).withDateBirth(entity.getDateBirth())
-				.withPositionId(entity.getPosition().getId()).withDepartmentId(entity.getDepartment().getId()).build();
+				.withPositionId(entity.getPosition().getId()).withDepartmentId(entity.getDepartment().getId())
+				.withCarsIds(CarMapper.mat2TOids(entity.getCars())).build();
 	}
 
 	public static EmployeeEntity toEmployeeEntity(EmployeeTO employeeTO) {
@@ -44,8 +45,7 @@ public class EmployeeMapper {
 		if (entitiesList == null) {
 			return null;
 		}
-		return entitiesList.stream().map(EmployeeMapper::toEmployeeTO).map(EmployeeTO::getId)
-				.collect(Collectors.toList());
+		return entitiesList.stream().map(EmployeeEntity::getId).collect(Collectors.toList());
 	}
 
 }

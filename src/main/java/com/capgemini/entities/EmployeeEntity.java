@@ -1,13 +1,16 @@
 package com.capgemini.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -30,6 +33,8 @@ public class EmployeeEntity implements Serializable {
 	private PositionEntity position;
 	@ManyToOne
 	private DepartmentEntity department;
+	@ManyToMany(mappedBy = "employees")
+	private List<CarEntity> cars = new ArrayList<>();
 
 	public EmployeeEntity() {
 	}
@@ -83,6 +88,19 @@ public class EmployeeEntity implements Serializable {
 
 	public void setDepartment(DepartmentEntity department) {
 		this.department = department;
+	}
+
+	public List<CarEntity> getCars() {
+		return cars;
+	}
+
+	public void setCars(List<CarEntity> cars) {
+		this.cars.clear();
+		this.cars = cars;
+	}
+
+	public void addCar(CarEntity car) {
+		this.cars.add(car);
 	}
 
 }

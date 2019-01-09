@@ -1,12 +1,17 @@
 package com.capgemini.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +37,11 @@ public class CarEntity implements Serializable {
 	private Integer enginePower;
 	@Column(nullable = false)
 	private Integer mileage;
+	@ManyToMany
+	@JoinTable(name = "EMPLOYEE_CAR", joinColumns = {
+			@JoinColumn(name = "CAR_ID", nullable = false)}, inverseJoinColumns = {
+			@JoinColumn(name = "EMPLOYEE_ID", nullable = false)})
+	private List<EmployeeEntity> employees = new ArrayList<>();
 
 	public CarEntity() {
 	}
@@ -107,5 +117,19 @@ public class CarEntity implements Serializable {
 	public void setMileage(Integer mileage) {
 		this.mileage = mileage;
 	}
+
+	public List<EmployeeEntity> getEmoloyees() {
+		return employees;
+	}
+
+	public void setEmoloyees(List<EmployeeEntity> emoloyees) {
+		this.employees.clear();
+		this.employees = emoloyees;
+	}
+	
+	public void addEmployee(EmployeeEntity employee) {
+		this.employees.add(employee);
+	}
+	
 
 }

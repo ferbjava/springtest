@@ -1,6 +1,8 @@
 package com.capgemini.tos;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class EmployeeTO {
@@ -11,13 +13,14 @@ public class EmployeeTO {
 	private Calendar dateBirth;
 	private Long positionId;
 	private Long departmentId;
+	private List<Long> carsIds = new ArrayList<>();
 
 	public EmployeeTO() {
 		super();
 	}
 
 	public EmployeeTO(Long id, String firstName, String lastName, Calendar dateBirth, Long positionId,
-			Long departmentId) {
+			Long departmentId, List<Long> carsIds) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -25,6 +28,7 @@ public class EmployeeTO {
 		this.dateBirth = dateBirth;
 		this.positionId = positionId;
 		this.departmentId = departmentId;
+		this.carsIds.addAll(carsIds);
 	}
 
 	public Long getId() {
@@ -58,6 +62,10 @@ public class EmployeeTO {
 	public void setDepartmentId(Long departmentId) {
 		this.departmentId = departmentId;
 	}
+	
+	public List<Long> getCarsIds() {
+		return this.carsIds;
+	}
 
 	public static class EmployeeTOBuilder {
 
@@ -67,6 +75,7 @@ public class EmployeeTO {
 		private Calendar dateBirth;
 		private Long positionId;
 		private Long departmentId;
+		private List<Long> carsIds = new ArrayList<>();
 
 		public EmployeeTOBuilder withId(Long id) {
 			this.id = id;
@@ -97,10 +106,15 @@ public class EmployeeTO {
 			this.departmentId = depId;
 			return this;
 		}
+		
+		public EmployeeTOBuilder withCarsIds(List<Long> carsIds) {
+			this.carsIds.addAll(carsIds);
+			return this;
+		}
 
 		public EmployeeTO build() {
 			checkBeforeBuild(firstName, lastName, dateBirth);
-			return new EmployeeTO(id, firstName, lastName, dateBirth, positionId, departmentId);
+			return new EmployeeTO(id, firstName, lastName, dateBirth, positionId, departmentId, carsIds);
 		}
 
 		private void checkBeforeBuild(String firstName, String lastName, Calendar dateBirth) {

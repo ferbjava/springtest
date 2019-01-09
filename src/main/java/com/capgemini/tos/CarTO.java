@@ -1,5 +1,8 @@
 package com.capgemini.tos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CarTO {
 
 	private Long id;
@@ -10,13 +13,14 @@ public class CarTO {
 	private Integer engineCapacity;
 	private Integer enginePower;
 	private Integer mileage;
+	private List<Long> employessIds = new ArrayList<>();
 
 	public CarTO() {
 		super();
 	}
 
 	public CarTO(Long id, String brand, String type, Integer productionYear, String color, Integer engineCapacity,
-			Integer enginePower, Integer mileage) {
+			Integer enginePower, Integer mileage, List<Long> employeesIds) {
 		super();
 		this.id = id;
 		this.brand = brand;
@@ -26,6 +30,8 @@ public class CarTO {
 		this.engineCapacity = engineCapacity;
 		this.enginePower = enginePower;
 		this.mileage = mileage;
+		this.employessIds.addAll(employeesIds);
+		
 	}
 
 	public Long getId() {
@@ -59,6 +65,10 @@ public class CarTO {
 	public Integer getMileage() {
 		return mileage;
 	}
+	
+	public List<Long> getEmoloyeesIds() {
+		return this.employessIds;
+	}
 
 	public static class CarTOBuilder {
 
@@ -70,6 +80,7 @@ public class CarTO {
 		private Integer engineCapacity;
 		private Integer enginePower;
 		private Integer mileage;
+		private List<Long> employessIds = new ArrayList<>();
 
 		public CarTOBuilder() {
 			super();
@@ -114,10 +125,15 @@ public class CarTO {
 			this.mileage = mileage;
 			return this;
 		}
+		
+		public CarTOBuilder withEmployeesIds(List<Long> employeesIds) {
+			this.employessIds.addAll(employeesIds);
+			return this;
+		}
 
 		public CarTO build() {
 			checkBeforeBuild(brand, type, productionYear, color, engineCapacity, enginePower, mileage);
-			return new CarTO(id, brand, type, productionYear, color, engineCapacity, enginePower, mileage);
+			return new CarTO(id, brand, type, productionYear, color, engineCapacity, enginePower, mileage, employessIds);
 		}
 
 		private void checkBeforeBuild(String brand, String type, Integer productionYear, String color,

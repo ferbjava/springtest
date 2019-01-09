@@ -65,6 +65,7 @@ public class DepartmentTO {
 		}
 
 		public DepartmentTOBuilder withEmployeesIds(List<Long> employeesIds) {
+			this.employeesIds.clear();
 			this.employeesIds.addAll(employeesIds);
 			return this;
 		}
