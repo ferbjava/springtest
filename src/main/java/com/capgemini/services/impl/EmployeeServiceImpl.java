@@ -37,22 +37,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = false)
 	public EmployeeTO saveEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
-		entity.setPosition(positionDao.findById(employeeTO.getPositionId()).get());
-		entity.setDepartment(depDao.findById(employeeTO.getDepartmentId()).get());
+		entity.setPosition(positionDao.findOne(employeeTO.getPositionId()));
+		entity.setDepartment(depDao.findOne(employeeTO.getDepartmentId()));
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
 
 	@Override
 	public EmployeeTO findEmployee(Long id) {
-		return EmployeeMapper.toEmployeeTO(employeeDao.findById(id).get());
+		return EmployeeMapper.toEmployeeTO(employeeDao.findOne(id));
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public EmployeeTO updateEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
-		entity.setPosition(positionDao.findById(employeeTO.getPositionId()).get());
-		entity.setDepartment(depDao.findById(employeeTO.getDepartmentId()).get());
+		entity.setPosition(positionDao.findOne(employeeTO.getPositionId()));
+		entity.setDepartment(depDao.findOne(employeeTO.getDepartmentId()));
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
 
@@ -66,7 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	@Transactional(readOnly = false)
 	public void removeEmployee(Long id) {
-		employeeDao.deleteById(id);
+		employeeDao.delete(id);
 	}
 
 	@Override

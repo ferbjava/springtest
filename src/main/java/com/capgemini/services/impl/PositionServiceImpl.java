@@ -39,7 +39,7 @@ public class PositionServiceImpl implements PositionService {
 
 	@Override
 	public PositionTO findPosition(Long id) {
-		return PositionMapper.toPositionTO(positionDao.findById(id).get());
+		return PositionMapper.toPositionTO(positionDao.findOne(id));
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class PositionServiceImpl implements PositionService {
 	public PositionTO updatePosition(PositionTO positionTO) {
 		PositionEntity entity = PositionMapper.toPositionEntity(positionTO);
 		positionTO.getEmployeesId().forEach(empId -> {
-			entity.addEmployee(employeeDao.findById(empId).get());
+			entity.addEmployee(employeeDao.findOne(empId));
 		});
 		return PositionMapper.toPositionTO(positionDao.save(entity));
 	}
@@ -64,9 +64,9 @@ public class PositionServiceImpl implements PositionService {
 	public void removePosition(Long id) {
 		List<EmployeeEntity> employees = employeeDao.findEmployeesByPositionId(id);
 		for(EmployeeEntity e : employees) {
-			employeeDao.deleteById(e.getId());
+			employeeDao.delete(e.getId());
 		}
-		positionDao.deleteById(id);
+		positionDao.delete(id);
 	}
 
 }

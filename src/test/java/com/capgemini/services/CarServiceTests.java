@@ -17,7 +17,7 @@ import com.capgemini.tos.CarTO.CarTOBuilder;
 import com.capgemini.util.DataSource;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = "spring.profiles.active=hsql")
+@SpringBootTest (properties = "spring.profiles.active=hsql")
 public class CarServiceTests {
 
 	private DataSource testData;
@@ -96,12 +96,12 @@ public class CarServiceTests {
 		CarTO savedCar02 = carService.saveCar(givenCar02);
 
 		// when
-		List<CarTO> findedCars = carService.findAllCars();
+		List<CarTO> foundedCars = carService.findAllCars();
 
 		// then
-		assertEquals(EXPECTED_CARS_NUMBER, new Long(findedCars.size()));
-		assertEquals(savedCar01.getId(), findedCars.get(0).getId());
-		assertEquals(savedCar02.getId(), findedCars.get(1).getId());
+		assertEquals(EXPECTED_CARS_NUMBER, new Long(foundedCars.size()));
+		assertEquals(savedCar01.getId(), foundedCars.get(0).getId());
+		assertEquals(savedCar02.getId(), foundedCars.get(1).getId());
 
 	}
 

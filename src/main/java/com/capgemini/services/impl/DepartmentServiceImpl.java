@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.capgemini.dao.DepartmentDao;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.entities.DepartmentEntity;
+import com.capgemini.entities.EmployeeEntity;
 import com.capgemini.mappers.DepartmentMapper;
 import com.capgemini.services.DepartmentService;
 import com.capgemini.tos.DepartmentTO;
@@ -33,7 +34,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public DepartmentTO findDepartment(Long id) {
-		return DepartmentMapper.toDepartmentTO(depDao.findById(id).get());
+		return DepartmentMapper.toDepartmentTO(depDao.findOne(id));
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public DepartmentTO updateDepartment(DepartmentTO depTO) {
 		DepartmentEntity entity = DepartmentMapper.toDepartmentEntity(depTO);
 		depTO.getEmployeesIds().forEach(empId -> {
-			entity.addEmployee(empDao.findById(empId).get());
+			entity.addEmployee(empDao.findOne(empId));
 		});
 		return DepartmentMapper.toDepartmentTO(depDao.save(entity));
 	}
@@ -59,8 +60,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void removeDepartment(Long id) {
-		depDao.deleteById(id);
+		List<EmployeeEntity> employees = empDao.findEmployeesByDepartmentId(id);
+		for(EmployeeEntity e: employees) {
+			empDao.delete(e.getId());
+		}
+		depDao.delete(id);
 	}
 
 }

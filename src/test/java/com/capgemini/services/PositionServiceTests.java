@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-//import org.junit.Before;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +14,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.tos.PositionTO;
 import com.capgemini.tos.PositionTO.PositionTOBuilder;
-//import com.capgemini.util.DataSource;
+import com.capgemini.util.DataSource;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.profiles.active=hsql")
 public class PositionServiceTests {
 
-	// private DataSource testData;
+	private DataSource testData;
 
 	@Autowired
 	private PositionService positionService;
 
-	// @Before
-	// public void initialize() {
-	// testData = new DataSource();
-	// }
+	@Before
+	public void initialize() {
+		testData = new DataSource();
+	}
 
 	@Test
 	@Transactional
@@ -50,8 +50,8 @@ public class PositionServiceTests {
 		// given
 		final Long EXPECTED_INITIAL_POSITION_NUMBER = 0L;
 		final Long EXPECTED_FINAL_POSITION_NUMBER = 2L;
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
-		PositionTO position02 = new PositionTOBuilder().withPositionName("dealer").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
+		PositionTO position02 = testData.getPositionsList().get(1);
 
 		// when
 		Long initialPositionsNumber = positionService.findPositionNo();
@@ -68,8 +68,8 @@ public class PositionServiceTests {
 	@Transactional
 	public void shouldFindPositionById() {
 		// given
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
-		PositionTO position02 = new PositionTOBuilder().withPositionName("dealer").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
+		PositionTO position02 = testData.getPositionsList().get(1);
 
 		positionService.savePosition(position01);
 		PositionTO savedPosition02 = positionService.savePosition(position02);
@@ -86,8 +86,8 @@ public class PositionServiceTests {
 	public void shouldFindAllPositions() {
 		// given
 		final int EXPECTED_POSITION_NUMBER = 2;
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
-		PositionTO position02 = new PositionTOBuilder().withPositionName("dealer").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
+		PositionTO position02 = testData.getPositionsList().get(1);
 
 		PositionTO savedPosition01 = positionService.savePosition(position01);
 		PositionTO savedPosition02 = positionService.savePosition(position02);
@@ -108,8 +108,8 @@ public class PositionServiceTests {
 		final Long EXPECTED_INITIAL_POSITION_NUMBER = 0L;
 		final Long EXPECTED_FINAL_POSITION_NUMBER = 2L;
 		final String EXPECTED_NEW_POSITION_NAME = "manager01";
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
-		PositionTO position02 = new PositionTOBuilder().withPositionName("dealer").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
+		PositionTO position02 = testData.getPositionsList().get(1);
 
 		Long initialPositionNumber = positionService.findPositionNo();
 		PositionTO savedPosition01 = positionService.savePosition(position01);
@@ -134,8 +134,8 @@ public class PositionServiceTests {
 		// given
 		final Long EXPECTED_INITIAL_POSITION_NUMBER = 2L;
 		final Long EXPECTED_FINAL_POSITION_NUMBER = 1L;
-		PositionTO position01 = new PositionTOBuilder().withPositionName("manager").build();
-		PositionTO position02 = new PositionTOBuilder().withPositionName("dealer").build();
+		PositionTO position01 = testData.getPositionsList().get(0);
+		PositionTO position02 = testData.getPositionsList().get(1);
 
 		PositionTO savedPosition01 = positionService.savePosition(position01);
 		positionService.savePosition(position02);

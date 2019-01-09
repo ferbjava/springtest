@@ -25,7 +25,7 @@ public class PositionEntity implements Serializable {
 	private Long id;
 	@Column(nullable = false, length = 45)
 	private String positionName;
-	@OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<EmployeeEntity> employees = new ArrayList<>();
 
 	public PositionEntity() {
@@ -47,16 +47,16 @@ public class PositionEntity implements Serializable {
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
-	
+
 	public List<EmployeeEntity> getEmployees() {
 		return employees;
 	}
-	
+
 	public void setEmployees(List<EmployeeEntity> employees) {
 		this.employees.clear();
 		this.employees.addAll(employees);
 	}
-	
+
 	public void addEmployee(EmployeeEntity employee) {
 		this.employees.add(employee);
 	}

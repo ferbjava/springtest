@@ -3,10 +3,8 @@ package com.capgemini.entities;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,9 +26,9 @@ public class EmployeeEntity implements Serializable {
 	private String lastName;
 	@Column(nullable = false)
 	private Calendar dateBirth;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne
 	private PositionEntity position;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private DepartmentEntity department;
 
 	public EmployeeEntity() {

@@ -1,0 +1,7 @@
+com\capgemini\services\CarServiceTests.class
+com\capgemini\services\EmployeeServiceTests.class
+com\capgemini\services\DepartmentServiceTests.class
+com\capgemini\AllTests.class
+com\capgemini\services\ServiceTestSuite.class
+com\capgemini\services\PositionServiceTests.class
+com\capgemini\SpringtestApplicationTests.class

@@ -22,4 +22,12 @@ public class EmployeeDaoImpl implements CustomEmployeeDao {
 		return query.setParameter("id", positionId).getResultList();
 	}
 
+	@Override
+	public List<EmployeeEntity> findEmployeesByDepartmentId(Long depId) {
+		TypedQuery<EmployeeEntity> query = entityManager.createQuery(
+				"SELECT e FROM EmployeeEntity e, DepartmentEntity d WHERE e MEMBER OF d.employees AND d.id = :id",
+				EmployeeEntity.class);
+		return query.setParameter("id", depId).getResultList();
+	}
+
 }

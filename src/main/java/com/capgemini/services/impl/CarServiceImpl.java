@@ -29,7 +29,7 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public CarTO findCar(Long id) {
-		return CarMapper.toCarTO(carDao.findById(id).get());
+		return CarMapper.toCarTO(carDao.findOne(id));
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class CarServiceImpl implements CarService {
 	@Override
 	@Transactional(readOnly = false)
 	public void removeCar(Long id) {
-		carDao.deleteById(id);
+		carDao.delete(id);
 	}
 
 	@Override
