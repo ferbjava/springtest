@@ -102,7 +102,7 @@ public class DepartmentServiceTests {
 		DepartmentTO savedDep02 = depService.saveDepartment(givenDepartment02);
 
 		// when
-		List<DepartmentTO> foundedDeps = depService.findAllDepartmetns();
+		List<DepartmentTO> foundedDeps = depService.findAllDepartments();
 
 		// then
 		assertEquals(EXPECTED_DEP_NUMBER, new Long(foundedDeps.size()));

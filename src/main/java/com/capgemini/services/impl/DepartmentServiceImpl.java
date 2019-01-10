@@ -48,7 +48,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public List<DepartmentTO> findAllDepartmetns() {
+	public List<DepartmentTO> findAllDepartments() {
 		List<DepartmentEntity> depList = new ArrayList<>();
 		depDao.findAll().forEach(depList::add);
 		return DepartmentMapper.map2TO(depList);

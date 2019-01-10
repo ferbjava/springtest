@@ -27,7 +27,8 @@ public class DepartmentEntity implements Serializable {
 	private String depAdrees;
 	@Column(nullable = false)
 	private Integer depTelephone;
-	@OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REMOVE })
 	private List<EmployeeEntity> employees = new ArrayList<>();
 
 	public DepartmentEntity() {

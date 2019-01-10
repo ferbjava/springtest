@@ -23,8 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDao employeeDao;
 
 	@Autowired
-	private PositionDao positionDao;
-	
+	private PositionDao posDao;
+
 	@Autowired
 	private DepartmentDao depDao;
 
@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = false)
 	public EmployeeTO saveEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
-		entity.setPosition(positionDao.findOne(employeeTO.getPositionId()));
+		entity.setPosition(posDao.findOne(employeeTO.getPositionId()));
 		entity.setDepartment(depDao.findOne(employeeTO.getDepartmentId()));
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}
@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = false)
 	public EmployeeTO updateEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
-		entity.setPosition(positionDao.findOne(employeeTO.getPositionId()));
+		entity.setPosition(posDao.findOne(employeeTO.getPositionId()));
 		entity.setDepartment(depDao.findOne(employeeTO.getDepartmentId()));
 		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
 	}

@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.capgemini.tos.CarTO;
 import com.capgemini.tos.CarTO.CarTOBuilder;
+import com.capgemini.tos.ClientTO;
+import com.capgemini.tos.ClientTO.ClientTOBuilder;
 import com.capgemini.tos.DepartmentTO;
 import com.capgemini.tos.DepartmentTO.DepartmentTOBuilder;
 import com.capgemini.tos.EmployeeTO;
@@ -19,12 +21,14 @@ public class DataSource {
 	private List<PositionTO> positionsData = new ArrayList<>();
 	private List<CarTO> carsData = new ArrayList<>();
 	private List<EmployeeTO> employeeData = new ArrayList<>();
+	private List<ClientTO> clientsData = new ArrayList<>();
 
 	public DataSource() {
 		fillDepartmentsList();
 		fillPositionsList();
 		fillCarsList();
 		fillEmployeesList();
+		fillClientsList();
 	}
 
 	public List<DepartmentTO> getDepartmentsList() {
@@ -42,6 +46,10 @@ public class DataSource {
 	public List<EmployeeTO> getEmployeeList() {
 		return employeeData;
 	}
+
+	public List<ClientTO> getClientList() {
+		return clientsData;
+	}	
 
 	private void fillDepartmentsList() {
 		departmentsData
@@ -96,6 +104,14 @@ public class DataSource {
 				.withDateBirth(new GregorianCalendar(1990, 10, 4)).build());
 		employeeData.add(new EmployeeTOBuilder().withFirstName("Cyryl").withLastName("Podolski")
 				.withDateBirth(new GregorianCalendar(1991, 11, 14)).build());
+	}
+	
+	public void fillClientsList() {
+		clientsData.add(new ClientTOBuilder().withFirstName("Jaroslaw").withLastName("Kaczynski").build());
+		clientsData.add(new ClientTOBuilder().withFirstName("Donald").withLastName("Tusk").build());
+		clientsData.add(new ClientTOBuilder().withFirstName("Zdradoslaw").withLastName("Sikorski").build());
+		clientsData.add(new ClientTOBuilder().withFirstName("Beata").withLastName("Kempa").build());
+		clientsData.add(new ClientTOBuilder().withFirstName("Krystyna").withLastName("Pawlowicz").build());
 	}
 
 }
