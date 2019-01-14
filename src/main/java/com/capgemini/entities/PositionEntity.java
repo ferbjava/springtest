@@ -27,6 +27,7 @@ public class PositionEntity implements Serializable {
 	private String positionName;
 	@OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REMOVE })
+//	@OneToMany(mappedBy = "position", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<EmployeeEntity> employees = new ArrayList<>();
 
 	public PositionEntity() {

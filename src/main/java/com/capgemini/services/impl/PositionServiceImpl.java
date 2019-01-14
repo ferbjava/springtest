@@ -23,7 +23,7 @@ public class PositionServiceImpl implements PositionService {
 	private PositionDao positionDao;
 
 	@Autowired
-	private EmployeeDao employeeDao;
+	private EmployeeDao empDao;
 
 	@Override
 	public Long findPositionNo() {
@@ -47,7 +47,9 @@ public class PositionServiceImpl implements PositionService {
 	public PositionTO updatePosition(PositionTO positionTO) {
 		PositionEntity entity = PositionMapper.toPositionEntity(positionTO);
 		positionTO.getEmployeesId().forEach(empId -> {
-			entity.addEmployee(employeeDao.findOne(empId));
+			EmployeeEntity empEnt = empDao.findOne(empId);
+			empEnt.setPosition(entity);
+			entity.addEmployee(empEnt);
 		});
 		return PositionMapper.toPositionTO(positionDao.save(entity));
 	}
@@ -62,9 +64,9 @@ public class PositionServiceImpl implements PositionService {
 	@Override
 	@Transactional(readOnly = false)
 	public void removePosition(Long id) {
-		List<EmployeeEntity> employees = employeeDao.findEmployeesByPositionId(id);
+		List<EmployeeEntity> employees = empDao.findEmployeesByPositionId(id);
 		for(EmployeeEntity e : employees) {
-			employeeDao.delete(e.getId());
+			empDao.delete(e.getId());
 		}
 		positionDao.delete(id);
 	}

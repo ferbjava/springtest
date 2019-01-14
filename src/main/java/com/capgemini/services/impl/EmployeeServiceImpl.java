@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.capgemini.dao.DepartmentDao;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.dao.PositionDao;
+import com.capgemini.entities.DepartmentEntity;
 import com.capgemini.entities.EmployeeEntity;
+import com.capgemini.entities.PositionEntity;
 import com.capgemini.mappers.EmployeeMapper;
 import com.capgemini.services.EmployeeService;
 import com.capgemini.tos.EmployeeTO;
@@ -37,9 +39,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = false)
 	public EmployeeTO saveEmployee(EmployeeTO employeeTO) {
 		EmployeeEntity entity = EmployeeMapper.toEmployeeEntity(employeeTO);
-		entity.setPosition(posDao.findOne(employeeTO.getPositionId()));
-		entity.setDepartment(depDao.findOne(employeeTO.getDepartmentId()));
-		return EmployeeMapper.toEmployeeTO(employeeDao.save(entity));
+		PositionEntity posEnt = posDao.findOne(employeeTO.getPositionId());
+		DepartmentEntity depEnt = depDao.findOne(employeeTO.getDepartmentId());
+		entity.setPosition(posEnt);
+		entity.setDepartment(depEnt);
+		EmployeeEntity savedEmployee = employeeDao.save(entity);
+		return EmployeeMapper.toEmployeeTO(savedEmployee);
 	}
 
 	@Override

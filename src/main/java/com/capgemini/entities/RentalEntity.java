@@ -24,6 +24,8 @@ public class RentalEntity implements Serializable {
 	private Calendar rentalDate;
 	@ManyToOne
 	private ClientEntity client;
+	@ManyToOne
+	private CarEntity car;
 
 	public RentalEntity() {
 	}
@@ -51,6 +53,14 @@ public class RentalEntity implements Serializable {
 
 	public void setClient(ClientEntity client) {
 		this.client = client;
+	}
+
+	public CarEntity getCar() {
+		return car;
+	}
+
+	public void setCar(CarEntity car) {
+		this.car = car;
 	}
 
 }

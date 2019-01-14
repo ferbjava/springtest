@@ -29,6 +29,7 @@ public class DepartmentEntity implements Serializable {
 	private Integer depTelephone;
 	@OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REMOVE })
+//	@OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<EmployeeEntity> employees = new ArrayList<>();
 
 	public DepartmentEntity() {

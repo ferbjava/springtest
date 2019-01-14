@@ -42,6 +42,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public DepartmentTO updateDepartment(DepartmentTO depTO) {
 		DepartmentEntity entity = DepartmentMapper.toDepartmentEntity(depTO);
 		depTO.getEmployeesIds().forEach(empId -> {
+			EmployeeEntity empEnt = empDao.findOne(empId);
+			empEnt.setDepartment(entity);
 			entity.addEmployee(empDao.findOne(empId));
 		});
 		return DepartmentMapper.toDepartmentTO(depDao.save(entity));
