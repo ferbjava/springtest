@@ -1,2 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS `car_rental` DEFAULT CHARACTER SET utf8 ;
-USE `car_rental`;
+CREATE SCHEMA IF NOT EXISTS jstk;
+CREATE SCHEMA IF NOT EXISTS jstk_jpa_02;
+USE car_rental;
+SELECT * FROM car;
+SELECT * FROM employee_car;
+SELECT * FROM post;
+SELECT * FROM comment;
